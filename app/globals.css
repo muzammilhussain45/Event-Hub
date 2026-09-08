@@ -1,26 +1,727 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =========================================================
+DARK MODE
+========================================================= */
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* -------------------------------------------------------
+COLORS
+------------------------------------------------------- */
+
+/* Primary */
+--color-primary: #624cf5;
+--color-primary-50: #f6f8fd;
+--color-primary-500: #624cf5;
+--color-primary-foreground: hsl(var(--primary-foreground));
+
+/* Coral */
+--color-coral-500: #15bf59;
+
+/* Grey */
+--color-grey-50: #f6f6f6;
+--color-grey-400: #afafaf;
+--color-grey-500: #757575;
+--color-grey-600: #545454;
+
+/* Basic */
+--color-black: #000000;
+--color-white: #ffffff;
+
+/* Shadcn colors */
+--color-background: hsl(var(--background));
+--color-foreground: hsl(var(--foreground));
+
+--color-border: hsl(var(--border));
+--color-input: hsl(var(--input));
+--color-ring: hsl(var(--ring));
+
+--color-secondary: hsl(var(--secondary));
+--color-secondary-foreground: hsl(var(--secondary-foreground));
+
+--color-destructive: hsl(var(--destructive));
+--color-destructive-foreground: hsl(var(--destructive-foreground));
+
+--color-muted: hsl(var(--muted));
+--color-muted-foreground: hsl(var(--muted-foreground));
+
+--color-accent: hsl(var(--accent));
+--color-accent-foreground: hsl(var(--accent-foreground));
+
+--color-popover: hsl(var(--popover));
+--color-popover-foreground: hsl(var(--popover-foreground));
+
+--color-card: hsl(var(--card));
+--color-card-foreground: hsl(var(--card-foreground));
+
+/* -------------------------------------------------------
+FONT
+------------------------------------------------------- */
+
+--font-poppins: var(--font-poppins);
+
+/* -------------------------------------------------------
+BACKGROUND IMAGES
+------------------------------------------------------- */
+
+--background-image-dotted-pattern: url("/assets/images/dotted-pattern.png");
+--background-image-hero-img: url("/assets/images/hero.png");
+
+/* -------------------------------------------------------
+BORDER RADIUS
+------------------------------------------------------- */
+
+--radius-sm: calc(var(--radius) - 4px);
+--radius-md: calc(var(--radius) - 2px);
+--radius-lg: var(--radius);
+
+/* -------------------------------------------------------
+ANIMATIONS
+------------------------------------------------------- */
+
+--animate-accordion-down: accordion-down 0.2s ease-out;
+--animate-accordion-up: accordion-up 0.2s ease-out;
+--font-heading: var(--font-sans);
+--font-sans: var(--font-sans);
+--color-sidebar-ring: var(--sidebar-ring);
+--color-sidebar-border: var(--sidebar-border);
+--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+--color-sidebar-accent: var(--sidebar-accent);
+--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+--color-sidebar-primary: var(--sidebar-primary);
+--color-sidebar-foreground: var(--sidebar-foreground);
+--color-sidebar: var(--sidebar);
+--color-chart-5: var(--chart-5);
+--color-chart-4: var(--chart-4);
+--color-chart-3: var(--chart-3);
+--color-chart-2: var(--chart-2);
+--color-chart-1: var(--chart-1);
+--radius-xl: calc(var(--radius) * 1.4);
+--radius-2xl: calc(var(--radius) * 1.8);
+--radius-3xl: calc(var(--radius) * 2.2);
+--radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =========================================================
+LIGHT MODE VARIABLES
+========================================================= */
+
+:root {
+
+--card: oklch(1 0 0);
+--card-foreground: oklch(0.145 0 0);
+
+--popover: oklch(1 0 0);
+--popover-foreground: oklch(0.145 0 0);
+
+--primary: oklch(0.205 0 0);
+--primary-foreground: oklch(0.985 0 0);
+
+--secondary: oklch(0.97 0 0);
+--secondary-foreground: oklch(0.205 0 0);
+
+--muted: oklch(0.97 0 0);
+--muted-foreground: oklch(0.556 0 0);
+
+--accent: oklch(0.97 0 0);
+--accent-foreground: oklch(0.205 0 0);
+
+--destructive: oklch(0.577 0.245 27.325);
+--destructive-foreground: 210 40% 98%;
+
+--border: oklch(0.922 0 0);
+--input: oklch(0.922 0 0);
+--ring: oklch(0.708 0 0);
+
+--radius: 0.625rem;
+
+--background: oklch(1 0 0);
+
+--foreground: oklch(0.145 0 0);
+
+--chart-1: oklch(0.87 0 0);
+
+--chart-2: oklch(0.556 0 0);
+
+--chart-3: oklch(0.439 0 0);
+
+--chart-4: oklch(0.371 0 0);
+
+--chart-5: oklch(0.269 0 0);
+
+--sidebar: oklch(0.985 0 0);
+
+--sidebar-foreground: oklch(0.145 0 0);
+
+--sidebar-primary: oklch(0.205 0 0);
+
+--sidebar-primary-foreground: oklch(0.985 0 0);
+
+--sidebar-accent: oklch(0.97 0 0);
+
+--sidebar-accent-foreground: oklch(0.205 0 0);
+
+--sidebar-border: oklch(0.922 0 0);
+
+--sidebar-ring: oklch(0.708 0 0);
+}
+
+/* =========================================================
+DARK MODE VARIABLES
+========================================================= */
+
+.dark {
+--background: oklch(0.145 0 0);
+--foreground: oklch(0.985 0 0);
+
+--card: oklch(0.205 0 0);
+--card-foreground: oklch(0.985 0 0);
+
+--popover: oklch(0.205 0 0);
+--popover-foreground: oklch(0.985 0 0);
+
+--primary: oklch(0.922 0 0);
+--primary-foreground: oklch(0.205 0 0);
+
+--secondary: oklch(0.269 0 0);
+--secondary-foreground: oklch(0.985 0 0);
+
+--muted: oklch(0.269 0 0);
+--muted-foreground: oklch(0.708 0 0);
+
+--accent: oklch(0.269 0 0);
+--accent-foreground: oklch(0.985 0 0);
+
+--destructive: oklch(0.704 0.191 22.216);
+--destructive-foreground: 210 40% 98%;
+
+--border: oklch(1 0 0 / 10%);
+--input: oklch(1 0 0 / 15%);
+--ring: oklch(0.556 0 0);
+--chart-1: oklch(0.87 0 0);
+--chart-2: oklch(0.556 0 0);
+--chart-3: oklch(0.439 0 0);
+--chart-4: oklch(0.371 0 0);
+--chart-5: oklch(0.269 0 0);
+--sidebar: oklch(0.205 0 0);
+--sidebar-foreground: oklch(0.985 0 0);
+--sidebar-primary: oklch(0.488 0.243 264.376);
+--sidebar-primary-foreground: oklch(0.985 0 0);
+--sidebar-accent: oklch(0.269 0 0);
+--sidebar-accent-foreground: oklch(0.985 0 0);
+--sidebar-border: oklch(1 0 0 / 10%);
+--sidebar-ring: oklch(0.556 0 0);
+}
+
+/* =========================================================
+BASE
+========================================================= */
+
+@layer base {
+
+* {
+  @apply border-border outline-ring/50;
   }
+
+html {
+scroll-behavior: smooth;
+font-family: var(--font-poppins);
+    @apply font-sans;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@apply bg-background text-foreground;
+font-family: var(--font-poppins);
+}
+
+*,
+*::before,
+*::after {
+box-sizing: border-box;
+}
+
+ul,
+ol {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+}
+
+/* =========================================================
+GLOBAL STYLES
+========================================================= */
+
+.filter-grey {
+filter: brightness(0) saturate(100%) invert(47%) sepia(0%)
+saturate(217%) hue-rotate(32deg) brightness(98%) contrast(92%);
+}
+
+/* =========================================================
+KEYFRAMES
+========================================================= */
+
+@keyframes accordion-down {
+from {
+height: 0;
+}
+
+to {
+height: var(--radix-accordion-content-height);
+}
+}
+
+@keyframes accordion-up {
+from {
+height: var(--radix-accordion-content-height);
+}
+
+to {
+height: 0;
+}
+}
+
+/* =========================================================
+CUSTOM UTILITIES
+========================================================= */
+
+@layer utilities {
+
+.wrapper {
+width: 100%;
+max-width: 80rem;
+margin-left: auto;
+margin-right: auto;
+padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+.wrapper {
+padding-left: 2.5rem;
+padding-right: 2.5rem;
+}
+}
+
+@media (min-width: 1280px) {
+.wrapper {
+padding-left: 0;
+padding-right: 0;
+}
+}
+
+/* -------------------------------------------------------
+FLEX
+------------------------------------------------------- */
+
+.flex-center {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.flex-between {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+/* =======================================================
+TYPOGRAPHY
+======================================================= */
+
+/* -------------------------------------------------------
+H1
+------------------------------------------------------- */
+
+.h1-bold {
+font-size: 40px;
+line-height: 48px;
+font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+.h1-bold {
+font-size: 48px;
+line-height: 60px;
+}
+}
+
+@media (min-width: 1280px) {
+.h1-bold {
+font-size: 58px;
+line-height: 74px;
+}
+}
+
+/* -------------------------------------------------------
+H2
+------------------------------------------------------- */
+
+.h2-bold {
+font-size: 32px;
+line-height: 40px;
+font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+.h2-bold {
+font-size: 36px;
+line-height: 44px;
+}
+}
+
+@media (min-width: 1280px) {
+.h2-bold {
+font-size: 40px;
+line-height: 48px;
+}
+}
+
+.h2-medium {
+font-size: 32px;
+line-height: 40px;
+font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+.h2-medium {
+font-size: 36px;
+line-height: 44px;
+}
+}
+
+@media (min-width: 1280px) {
+.h2-medium {
+font-size: 40px;
+line-height: 48px;
+}
+}
+
+/* -------------------------------------------------------
+H3
+------------------------------------------------------- */
+
+.h3-bold {
+font-size: 28px;
+line-height: 36px;
+font-weight: 700;
+}
+
+@media (min-width: 768px) {
+.h3-bold {
+font-size: 36px;
+line-height: 44px;
+}
+}
+
+.h3-medium {
+font-size: 28px;
+line-height: 36px;
+font-weight: 500;
+}
+
+@media (min-width: 768px) {
+.h3-medium {
+font-size: 36px;
+line-height: 44px;
+}
+}
+
+/* -------------------------------------------------------
+H4
+------------------------------------------------------- */
+
+.h4-medium {
+font-size: 32px;
+line-height: 40px;
+font-weight: 500;
+}
+
+/* -------------------------------------------------------
+H5
+------------------------------------------------------- */
+
+.h5-bold {
+font-size: 28px;
+line-height: 36px;
+font-weight: 700;
+}
+
+/* =======================================================
+24px PARAGRAPHS
+======================================================= */
+
+.p-bold-24 {
+font-size: 24px;
+line-height: 36px;
+font-weight: 700;
+}
+
+.p-medium-24 {
+font-size: 24px;
+line-height: 36px;
+font-weight: 500;
+}
+
+.p-regular-24 {
+font-size: 24px;
+line-height: 36px;
+font-weight: 400;
+}
+
+/* =======================================================
+20px PARAGRAPHS
+======================================================= */
+
+.p-bold-20 {
+font-size: 20px;
+line-height: 30px;
+font-weight: 700;
+letter-spacing: 0.02em;
+}
+
+.p-semibold-20 {
+font-size: 20px;
+line-height: 30px;
+font-weight: 600;
+letter-spacing: 0.02em;
+}
+
+.p-medium-20 {
+font-size: 20px;
+line-height: 30px;
+font-weight: 500;
+}
+
+.p-regular-20 {
+font-size: 20px;
+line-height: 30px;
+font-weight: 400;
+letter-spacing: 0.02em;
+}
+
+/* =======================================================
+18px PARAGRAPHS
+======================================================= */
+
+.p-semibold-18 {
+font-size: 18px;
+line-height: 28px;
+font-weight: 600;
+letter-spacing: 0.02em;
+}
+
+.p-medium-18 {
+font-size: 18px;
+line-height: 28px;
+font-weight: 500;
+}
+
+.p-regular-18 {
+font-size: 18px;
+line-height: 28px;
+font-weight: 400;
+letter-spacing: 0.02em;
+}
+
+/* =======================================================
+16px PARAGRAPHS
+======================================================= */
+
+.p-bold-16 {
+font-size: 16px;
+line-height: 24px;
+font-weight: 700;
+}
+
+.p-medium-16 {
+font-size: 16px;
+line-height: 24px;
+font-weight: 500;
+}
+
+.p-regular-16 {
+font-size: 16px;
+line-height: 24px;
+font-weight: 400;
+}
+
+/* =======================================================
+14px PARAGRAPHS
+======================================================= */
+
+.p-semibold-14 {
+font-size: 14px;
+line-height: 20px;
+font-weight: 600;
+}
+
+.p-medium-14 {
+font-size: 14px;
+line-height: 20px;
+font-weight: 500;
+}
+
+.p-regular-14 {
+font-size: 14px;
+line-height: 20px;
+font-weight: 400;
+}
+
+/* =======================================================
+12px PARAGRAPH
+======================================================= */
+
+.p-medium-12 {
+font-size: 12px;
+line-height: 20px;
+font-weight: 500;
+}
+
+/* =======================================================
+SHADCN / FORM OVERRIDES
+======================================================= */
+
+.select-field {
+width: 100%;
+height: 54px;
+background-color: #f6f6f6;
+border: none;
+border-radius: 9999px;
+padding: 0.75rem 1.25rem;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400;
+outline: none;
+}
+
+.select-field::placeholder {
+color: #757575;
+}
+
+.select-field:focus {
+outline: none;
+box-shadow: none;
+}
+
+.input-field {
+height: 54px;
+background-color: #f6f6f6;
+border: none;
+border-radius: 9999px;
+padding: 0.75rem 1rem;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400;
+outline: none;
+}
+
+.input-field::placeholder {
+color: #757575;
+}
+
+.input-field:focus {
+outline: none;
+box-shadow: none;
+}
+
+.textarea {
+display: flex;
+flex: 1;
+background-color: #f6f6f6;
+border: none;
+padding: 0.75rem 1.25rem;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400;
+outline: none;
+resize: vertical;
+}
+
+.textarea::placeholder {
+color: #757575;
+}
+
+.textarea:focus {
+outline: none;
+box-shadow: none;
+}
+
+.button {
+height: 54px;
+border-radius: 9999px;
+padding: 0.75rem 1rem;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400;
+}
+
+.select-item {
+padding-top: 0.75rem;
+padding-bottom: 0.75rem;
+cursor: pointer;
+}
+
+.select-item:focus {
+background-color: #f6f8fd;
+}
+
+.toggle-switch {
+background-color: #d1d5db !important;
+}
+}
+
+/* =========================================================
+CLERK STYLES
+========================================================= */
+
+.cl-logoImage {
+height: 38px;
+}
+
+.cl-userButtonBox {
+flex-direction: row-reverse;
+}
+
+.cl-userButtonOuterIdentifier {
+font-size: 16px;
+}
+
+.cl-userButtonPopoverCard {
+right: 4px !important;
+}
+
+.cl-formButtonPrimary:hover,
+.cl-formButtonPrimary:focus,
+.cl-formButtonPrimary:active {
+background-color: #705cf7;
+}
+
+/* =========================================================
+REACT DATEPICKER STYLES
+========================================================= */
+
+.datePicker {
+width: 100%;
+}
+
+.react-datepicker__input-container input {
+width: 100%;
+margin-left: 16px;
+background-color: transparent;
+outline: none;
+}
+
+.react-datepicker__day--selected {
+background-color: #624cf5 !important;
+color: #ffffff !important;
+border-radius: 4px;
+}
+
+.react-datepicker__time-list-item--selected {
+background-color: #624cf5 !important;
 }
