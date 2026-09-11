@@ -35,7 +35,7 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
     const organizer = await User.findById(userId)
     if (!organizer) throw new Error('Organizer not found')
 
-    const newEvent = await Event.create({ ...event, category: event.categoryId, organizer: userId })
+    const newEvent = await Event.create({ ...event, category: event.categoryId, organizer: organizer._id })
     revalidatePath(path)
 
     return JSON.parse(JSON.stringify(newEvent))
@@ -65,7 +65,7 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
     await connectToDatabase()
 
     const eventToUpdate = await Event.findById(event._id)
-    if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
+    if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId.toString()) {
       throw new Error('Unauthorized or event not found')
     }
 

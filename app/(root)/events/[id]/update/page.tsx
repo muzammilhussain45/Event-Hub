@@ -1,6 +1,7 @@
 import EventForm from "@/components/shared/EventForm"
-import { auth } from "@clerk/nextjs/server"
 import { getEventById } from "@/lib/actions/event.actions"
+import { getCurrentUserId } from "@/lib/current-user"
+import { redirect } from "next/navigation"
 
 type UpdateEventProps = {
   params: Promise<{
@@ -10,7 +11,9 @@ type UpdateEventProps = {
 
 const UpdateEvent = async ({ params }: UpdateEventProps) => {
   const { id } = await params
-  const { userId } = await auth()
+  const userId = await getCurrentUserId()
+
+  if (!userId) redirect("/")
 
   const event = await getEventById(id)
 
@@ -27,7 +30,7 @@ const UpdateEvent = async ({ params }: UpdateEventProps) => {
           type="Update"
           event={event}
           eventId={event._id}
-          userId={userId!}
+          userId={userId}
         />
       </div>
     </>

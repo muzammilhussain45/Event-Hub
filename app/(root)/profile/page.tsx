@@ -4,12 +4,12 @@ import { getEventsByUser } from '@/lib/actions/event.actions'
 import { getOrdersByUser } from '@/lib/actions/order.actions'
 import { IOrder } from '@/lib/database/models/order.model'
 import { SearchParamProps } from '@/types'
-import { auth } from '@clerk/nextjs/server'
+import { getCurrentUserId } from '@/lib/current-user'
 import Link from 'next/link'
 import React from 'react'
 
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
-  const { userId } = await auth()
+  const userId = await getCurrentUserId()
 
   if (!userId) {
     return null

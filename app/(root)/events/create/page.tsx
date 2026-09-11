@@ -1,8 +1,11 @@
 import EventForm from "@/components/shared/EventForm";
-import { auth } from "@clerk/nextjs/server";
+import { getCurrentUserId } from "@/lib/current-user";
+import { redirect } from "next/navigation";
 
 const CreateEvent = async () => {
-  const { userId } = await auth();
+  const userId = await getCurrentUserId();
+
+  if (!userId) redirect("/");
 
   return (
     <>
