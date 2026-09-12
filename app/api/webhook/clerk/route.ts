@@ -4,14 +4,13 @@ import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
+  let eventType: string | undefined;
+
   try {
     const evt = await verifyWebhook(req);
 
-    // Do something with payload
-    // For this guide, log payload to console
-    const { id } = evt.data;
-    const eventType = evt.type;
-    if (eventType === "user.created") {
+    eventType = evt.type;
+    if (evt.type === "user.created") {
       const {
         id,
         email_addresses,
@@ -25,9 +24,9 @@ export async function POST(req: NextRequest) {
         clerkId: id,
         email: email_addresses[0].email_address,
         username: username!,
-        firstName: first_name || "",
-        lastName: last_name || "",
-        photo: image_url,
+        firstName: first_name || "Unknown",
+        lastName: last_name || "User",
+        photo: image_url || "https://www.gravatar.com/avatar?d=mp",
       };
 
       const newUser = await createUser(user);
@@ -44,32 +43,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "User created successfully", user: newUser });
     }
 
-     if (eventType === 'user.updated') {
-    const {id, image_url, first_name, last_name, username } = evt.data
+    if (evt.type === 'user.updated') {
+      const { id, image_url, first_name, last_name, username } = evt.data
 
-    const user = {
-      firstName: first_name || "",
-        lastName: last_name || "",
-      username: username!,
-      photo: image_url,
+      const user = {
+        firstName: first_name || "Unknown",
+        lastName: last_name || "User",
+        username: username!,
+        photo: image_url || "https://www.gravatar.com/avatar?d=mp",
+      }
+
+      const updatedUser = await updateUser(id, user)
+
+      return NextResponse.json({ message: 'OK', user: updatedUser })
     }
 
-    const updatedUser = await updateUser(id, user)
+    if (evt.type === 'user.deleted') {
+      const { id } = evt.data
 
-    return NextResponse.json({ message: 'OK', user: updatedUser })
-  }
+      const deletedUser = await deleteUser(id!)
 
-  if (eventType === 'user.deleted') {
-    const { id } = evt.data
-
-    const deletedUser = await deleteUser(id!)
-
-    return NextResponse.json({ message: 'OK', user: deletedUser })
-  }
+      return NextResponse.json({ message: 'OK', user: deletedUser })
+    }
 
     return new Response("Webhook received", { status: 200 });
   } catch (err) {
-    console.error("Error verifying webhook:", err);
-    return new Response("Error verifying webhook", { status: 400 });
+    console.error(`Clerk webhook failed for ${eventType || "unknown event"}:`, err);
+    return new Response("Webhook processing failed", { status: 500 });
   }
 }
